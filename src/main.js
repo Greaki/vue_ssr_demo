@@ -20,8 +20,9 @@ export function createVue(context) {
   return { app, router, store }; // 返回app 和 router， 给客户端和服务端入口文件使用
 }
 
-new Vue({
-  store: createStore(),
-  router: createRouter(),
-  render: h => h(App)
-}).$mount("#app");
+// ssr的时候不要继续new了，因为会导致首屏组件执行了两次，有点污染
+// new Vue({
+//   store: createStore(),
+//   router: createRouter(),
+//   render: h => h(App)
+// }).$mount("#app");

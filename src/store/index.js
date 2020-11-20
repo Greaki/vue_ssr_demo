@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -13,14 +14,27 @@ Vue.use(Vuex);
 export function createStore() {
   return new Vuex.Store({
     state: {
-      name: "river"
+      name: "river",
+      cat: {}
     },
     mutations: {
       setName(state, newName = "") {
         state.name = newName;
+      },
+      setCat(state, cat) {
+        state.cat = cat;
       }
     },
-    actions: {},
+    actions: {
+      getCatText({ commit }) {
+        return axios
+          .get("https://cat-fact.herokuapp.com/facts/random")
+          .then(res => {
+            console.log("res", res);
+            commit("setCat", res?.data?.text || "");
+          });
+      }
+    },
     modules: {}
   });
 }
