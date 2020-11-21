@@ -7,8 +7,9 @@ const merge = require("lodash.merge");
 // 根据传入环境变量决定入口文件和相应配置项
 const TARGET_NODE = process.env.WEBPACK_TARGET === "node";
 const target = TARGET_NODE ? "server" : "client";
-
+const isDev = process.env.NODE_ENV !== "production";
 module.exports = {
+  publicPath: isDev ? "http://127.0.0.1:8080" : "http://127.0.0.1:3000",
   css: {
     extract: false
   },
